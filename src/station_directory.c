@@ -215,19 +215,49 @@ void countStationsOnRoute() {
 /* ================================================================
    FORMATTED DISPLAY
    ================================================================ */
+// void displayStationTable() {
+//     if (stationHead == NULL) { printf("[!] Directory is empty.\n"); return; }
+//     printf("\n╔════════╦═════════════════════════╦════════╦══════╦══════════════════════╦════════════╗\n");
+//     printf("║   ID   ║ Station Name            ║  Code  ║ Plat ║ Route                ║ Status     ║\n");
+//     printf("╠════════╬═════════════════════════╬════════╬══════╬══════════════════════╬════════════╣\n");
+//     StationNode* curr = stationHead;
+//     while (curr) {
+//         printf("║ ST%-4d ║ %-23s ║ %-6s ║ %-4d ║ %-20s ║ %-10s ║\n",
+//                curr->stationID, curr->stationName, curr->stationCode,
+//                curr->platformCount, curr->routeName, curr->status);
+//         curr = curr->next;
+//     }
+//     printf("╚════════╩═════════════════════════╩════════╩══════╩══════════════════════╩════════════╝\n");
+// }
+
 void displayStationTable() {
-    if (stationHead == NULL) { printf("[!] Directory is empty.\n"); return; }
-    printf("\n╔════════╦═════════════════════════╦════════╦══════╦══════════════════════╦════════════╗\n");
-    printf("║   ID   ║ Station Name            ║  Code  ║ Plat ║ Route                ║ Status     ║\n");
-    printf("╠════════╬═════════════════════════╬════════╬══════╬══════════════════════╬════════════╣\n");
+    if (stationHead == NULL) {
+        printf("\n  [!] Directory is empty.\n");
+        return;
+    }
+
+    printf("\n");
+    printf("  +----------------------------------------------------------------------------------------------+\n");
+    printf("  |                                   STATION DIRECTORY                                          |\n");
+    printf("  +--------+-------------------------+--------+------+----------------------+------------+\n");
+    printf("  |   ID   | Station Name            | Code   | Plat | Route                | Status     |\n");
+    printf("  +--------+-------------------------+--------+------+----------------------+------------+\n");
+
     StationNode* curr = stationHead;
+
     while (curr) {
-        printf("║ ST%-4d ║ %-23s ║ %-6s ║ %-4d ║ %-20s ║ %-10s ║\n",
-               curr->stationID, curr->stationName, curr->stationCode,
-               curr->platformCount, curr->routeName, curr->status);
+        printf("  | ST%-4d | %-23s | %-6s | %-4d | %-20s | %-10s |\n",
+               curr->stationID,
+               curr->stationName,
+               curr->stationCode,
+               curr->platformCount,
+               curr->routeName,
+               curr->status);
+
         curr = curr->next;
     }
-    printf("╚════════╩═════════════════════════╩════════╩══════╩══════════════════════╩════════════╝\n");
+
+    printf("  +--------+-------------------------+--------+------+----------------------+------------+\n");
 }
 
 /* Helper: find station by ID */
