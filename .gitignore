@@ -1,0 +1,9 @@
+# Compiled output
+output/
+*.o
+*.exe
+*.out
+
+# OS junk
+.DS_Store
+Thumbs.db

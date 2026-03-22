@@ -50,7 +50,7 @@ void addJourneyRecord() {
         journeyTail->next   = newNode;
         journeyTail         = newNode;
     }
-    printf("[+] Journey J%d logged: %s → %s\n",
+    printf("[+] Journey J%d logged: %s -> %s\n",
            newNode->journeyID, newNode->fromStation, newNode->toStation);
 }
 
@@ -125,7 +125,7 @@ void searchJourneyRecord() {
         JourneyNode* curr = journeyHead;
         while (curr) {
             if (curr->trainID == tid) {
-                printf("  J%-4d | %-15s → %-15s | %s | %.1fkm | %s\n",
+                printf("  J%-4d | %-15s -> %-15s | %s | %.1fkm | %s\n",
                        curr->journeyID, curr->fromStation, curr->toStation,
                        curr->departureTime, curr->distanceKm, curr->status);
                 found = 1;
@@ -158,12 +158,12 @@ void displayAllJourneys() {
 /* Browse forward — oldest to newest */
 void traverseForward() {
     if (!journeyHead) { printf("[!] Log is empty.\n"); return; }
-    printf("\n[FORWARD — Oldest Journey → Latest]\n");
+    printf("\n[FORWARD — Oldest Journey -> Latest]\n");
     printf(DIVIDER);
     JourneyNode* curr = journeyHead;
     int step = 1;
     while (curr) {
-        printf("Step %d: J%d | T%d | %s → %s | %s | %.1fkm\n",
+        printf("Step %d: J%d | T%d | %s -> %s | %s | %.1fkm\n",
                step++, curr->journeyID, curr->trainID,
                curr->fromStation, curr->toStation,
                curr->departureTime, curr->distanceKm);
@@ -175,12 +175,12 @@ void traverseForward() {
 /* Browse backward — latest to oldest (unique to Doubly LL) */
 void traverseBackward() {
     if (!journeyTail) { printf("[!] Log is empty.\n"); return; }
-    printf("\n[BACKWARD — Latest Journey → Oldest]\n");
+    printf("\n[BACKWARD — Latest Journey -> Oldest]\n");
     printf(DIVIDER);
     JourneyNode* curr = journeyTail;
     int step = 1;
     while (curr) {
-        printf("Step %d: J%d | T%d | %s → %s | %s | %.1fkm\n",
+        printf("Step %d: J%d | T%d | %s -> %s | %s | %.1fkm\n",
                step++, curr->journeyID, curr->trainID,
                curr->fromStation, curr->toStation,
                curr->departureTime, curr->distanceKm);
@@ -227,7 +227,7 @@ void selectionSortByDeparture() {
         }
         i = i->next;
     }
-    printf("[+] Journeys sorted by departure time (Earliest → Latest).\n");
+    printf("[+] Journeys sorted by departure time (Earliest -> Latest).\n");
     displayAllJourneys();
 }
 
@@ -270,20 +270,51 @@ void calculateJourneyDistance() {
 /* ================================================================
    FORMATTED DISPLAY
    ================================================================ */
+// void displayJourneyTable() {
+//     if (!journeyHead) { printf("[!] Journey log is empty.\n"); return; }
+//     printf("\n╔══════╦═══════╦══════════════════╦══════════════════╦═════════╦════════╦════════╗\n");
+//     printf("║  JID ║ TrnID ║ From             ║ To               ║ Depart  ║ Dist   ║ Status ║\n");
+//     printf("╠══════╬═══════╬══════════════════╬══════════════════╬═════════╬════════╬════════╣\n");
+//     JourneyNode* curr = journeyHead;
+//     while (curr) {
+//         printf("║ J%-4d║ T%-5d║ %-16s ║ %-16s ║ %-7s ║ %5.1fkm║ %-6s ║\n",
+//                curr->journeyID, curr->trainID,
+//                curr->fromStation, curr->toStation,
+//                curr->departureTime, curr->distanceKm, curr->status);
+//         curr = curr->next;
+//     }
+//     printf("╚══════╩═══════╩══════════════════╩══════════════════╩═════════╩════════╩════════╝\n");
+// }
+
 void displayJourneyTable() {
-    if (!journeyHead) { printf("[!] Journey log is empty.\n"); return; }
-    printf("\n╔══════╦═══════╦══════════════════╦══════════════════╦═════════╦════════╦════════╗\n");
-    printf("║  JID ║ TrnID ║ From             ║ To               ║ Depart  ║ Dist   ║ Status ║\n");
-    printf("╠══════╬═══════╬══════════════════╬══════════════════╬═════════╬════════╬════════╣\n");
+    if (!journeyHead) {
+        printf("\n  [!] Journey log is empty.\n");
+        return;
+    }
+
+    printf("\n");
+    printf("  +----------------------------------------------------------------------------------+\n");
+    printf("  |                              JOURNEY LOG TABLE                                   |\n");
+    printf("  +--------+--------+------------------+------------------+----------+--------+--------+\n");
+    printf("  |  JID   | TrnID  | From             | To               | Depart   | Dist   | Status |\n");
+    printf("  +--------+--------+------------------+------------------+----------+--------+--------+\n");
+
     JourneyNode* curr = journeyHead;
+
     while (curr) {
-        printf("║ J%-4d║ T%-5d║ %-16s ║ %-16s ║ %-7s ║ %5.1fkm║ %-6s ║\n",
-               curr->journeyID, curr->trainID,
-               curr->fromStation, curr->toStation,
-               curr->departureTime, curr->distanceKm, curr->status);
+        printf("  | J%-5d | T%-5d | %-16s | %-16s | %-8s | %6.1f | %-6s |\n",
+               curr->journeyID,
+               curr->trainID,
+               curr->fromStation,
+               curr->toStation,
+               curr->departureTime,
+               curr->distanceKm,
+               curr->status);
+
         curr = curr->next;
     }
-    printf("╚══════╩═══════╩══════════════════╩══════════════════╩═════════╩════════╩════════╝\n");
+
+    printf("  +--------+--------+------------------+------------------+----------+--------+--------+\n");
 }
 
 /* ================================================================
@@ -300,8 +331,8 @@ void journeyLogMenu() {
         printf("  3.  Update Journey Status\n");
         printf("  4.  Search Journey\n");
         printf("  5.  Display All Journeys\n");
-        printf("  6.  Traverse Forward (Oldest → Latest)\n");
-        printf("  7.  Traverse Backward (Latest → Oldest)\n");
+        printf("  6.  Traverse Forward (Oldest -> Latest)\n");
+        printf("  7.  Traverse Backward (Latest -> Oldest)\n");
         printf("  8.  Sort by Departure Time  [Selection Sort]\n");
         printf("  9.  Calculate Journey Distance  [EXTRA]\n");
         printf(" 10.  Display Journey Table\n");
