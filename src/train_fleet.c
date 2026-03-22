@@ -196,19 +196,46 @@ void calculateTotalSeatCapacity() {
 /* ================================================================
    FORMATTED DISPLAY
    ================================================================ */
+// void displayFleetTable() {
+//     if (isFleetEmpty()) { printf("[!] Fleet is empty.\n"); return; }
+//     printf("\n╔═══════╦══════════════════════════════╦════════════╦═══════╦══════╦════════════╗\n");
+//     printf("║  ID   ║ Train Name                   ║ Type       ║ Seats ║ Load ║ Status     ║\n");
+//     printf("╠═══════╬══════════════════════════════╬════════════╬═══════╬══════╬════════════╣\n");
+//     for (int i = 0; i < trainCount; i++) {
+//         printf("║ T%-4d ║ %-28s ║ %-10s ║ %-5d ║ %-4d ║ %-10s ║\n",
+//                fleet[i].trainID, fleet[i].trainName,
+//                fleet[i].trainType, fleet[i].seatCapacity,
+//                fleet[i].currentLoad, fleet[i].status);
+//     }
+//     printf("╚═══════╩══════════════════════════════╩════════════╩═══════╩══════╩════════════╝\n");
+//     printf("Fleet: %d / %d trains registered\n", trainCount, MAX_TRAINS);
+// }
+
 void displayFleetTable() {
-    if (isFleetEmpty()) { printf("[!] Fleet is empty.\n"); return; }
-    printf("\n╔═══════╦══════════════════════════════╦════════════╦═══════╦══════╦════════════╗\n");
-    printf("║  ID   ║ Train Name                   ║ Type       ║ Seats ║ Load ║ Status     ║\n");
-    printf("╠═══════╬══════════════════════════════╬════════════╬═══════╬══════╬════════════╣\n");
-    for (int i = 0; i < trainCount; i++) {
-        printf("║ T%-4d ║ %-28s ║ %-10s ║ %-5d ║ %-4d ║ %-10s ║\n",
-               fleet[i].trainID, fleet[i].trainName,
-               fleet[i].trainType, fleet[i].seatCapacity,
-               fleet[i].currentLoad, fleet[i].status);
+    if (isFleetEmpty()) {
+        printf("\n  [!] Fleet is empty.\n");
+        return;
     }
-    printf("╚═══════╩══════════════════════════════╩════════════╩═══════╩══════╩════════════╝\n");
-    printf("Fleet: %d / %d trains registered\n", trainCount, MAX_TRAINS);
+
+    printf("\n");
+    printf("  +-------------------------------------------------------------------------------------------+\n");
+    printf("  |                                   TRAIN FLEET REGISTRY                                   |\n");
+    printf("  +--------+------------------------------+------------+-------+------+------------+\n");
+    printf("  |  ID    | Train Name                   | Type       | Seats | Load | Status     |\n");
+    printf("  +--------+------------------------------+------------+-------+------+------------+\n");
+
+    for (int i = 0; i < trainCount; i++) {
+        printf("  | T%-5d | %-28s | %-10s | %-5d | %-4d | %-10s |\n",
+               fleet[i].trainID,
+               fleet[i].trainName,
+               fleet[i].trainType,
+               fleet[i].seatCapacity,
+               fleet[i].currentLoad,
+               fleet[i].status);
+    }
+
+    printf("  +--------+------------------------------+------------+-------+------+------------+\n");
+    printf("  Fleet: %d / %d trains registered\n", trainCount, MAX_TRAINS);
 }
 
 /* Helper: find train by ID (used by other modules) */
