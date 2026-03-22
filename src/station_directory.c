@@ -2,6 +2,13 @@
    station_directory.c - Member 2 | Data Structure: SINGLY LINKED LIST
    Module: Station Directory
    ================================================================ */
+/* -------------------------------------------------------------------------
+   STUDENT NOTE: 
+   This module implements a SINGLY LINKED LIST to manage railway stations.
+   - Dynamic memory allocation is used for each station node.
+   - Pointers are used to traverse, insert, and delete stations.
+   - Linked lists are ideal here as the station count can change dynamically.
+   ------------------------------------------------------------------------- */
 
 #include <stdio.h>
 #include <stdlib.h>
